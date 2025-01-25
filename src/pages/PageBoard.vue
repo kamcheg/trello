@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
+// import { useRoute } from 'vue-router'
+import List from '@/components/List/List.vue'
 
-const route = useRoute()
+// const route = useRoute()
 </script>
 
 <template>
-  <h1>
-    ID: {{ route.params.id }}
-  </h1>
+  <div>
+    <List />
+  </div>
 </template>
 
 <style scoped lang="scss">
