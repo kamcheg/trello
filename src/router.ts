@@ -1,11 +1,11 @@
 import { createWebHistory, createRouter } from 'vue-router'
 
-import Boards from '@/pages/Boards.vue'
-import Board from '@/pages/Board.vue'
+import PageBoards from '@/pages/PageBoards.vue'
+import PageBoard from '@/pages/PageBoard.vue'
 
 const routes = [
-  { path: '/', component: Boards },
-  { path: '/boards/:id', component: Board },
+  { path: '/', component: PageBoards },
+  { path: '/boards/:id', component: PageBoard },
 ]
 
 export const router = createRouter({
