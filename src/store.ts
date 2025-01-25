@@ -6,17 +6,32 @@ export const useStore = defineStore('mainStore', () => {
   const boards = useLocalStorage<IBoard[]>('boards', [
     {
       id: 1,
+      title: 'Общее',
       lists: [
         {
           id: 1,
-          name: '',
+          name: 'Все задачи',
           tasks: [
             {
-              id: 1,
-              title: ''
+              id: 33,
+              title: 'Прочитать книгу'
             }
           ]
-        }
+        },
+        {
+          id: 2,
+          name: 'В работе',
+          tasks: [
+            {
+              id: 44,
+              title: 'Сделать уборку'
+            },
+            {
+              id: 44,
+              title: 'Сходить в магазин'
+            }
+          ]
+        },
       ]
     }
   ])

@@ -1,5 +1,15 @@
 <script setup lang="ts">
 import Task from '@/components/Task/Task.vue'
+import { ref } from 'vue'
+import Draggable from 'vuedraggable'
+
+const todo = ref([
+  { id: 1, title: 'This is TASK' },
+  { id: 12, title: 'This is TASK' },
+  { id: 31, title: 'This is TASK' },
+  { id: 41, title: 'This is TASK' },
+  { id: 51, title: 'This is TASK' }
+])
 </script>
 
 <template>
@@ -7,12 +17,22 @@ import Task from '@/components/Task/Task.vue'
     <div class="header">
       Название
     </div>
-    <div class="body">
-      <Task class="body__task">This is TASK</Task>
-      <Task class="body__task">This is TASK</Task>
-      <Task class="body__task">This is TASK</Task>
-      <Task class="body__task">This is TASK</Task>
-    </div>
+
+    <Draggable
+      v-model="todo"
+      item-key="id"
+      :animation="300"
+      ghostClass="ghost"
+      group="tasks"
+      class="body"
+    >
+      <template #item="{ element: task }">
+        <Task class="body__task">
+          {{ task.title }}
+        </Task>
+      </template>
+    </Draggable>
+
     <div class="footer">
 
     </div>
@@ -38,5 +58,10 @@ import Task from '@/components/Task/Task.vue'
       }
     }
   }
+}
+
+.ghost {
+  opacity: 0.5;
+  background: #69eaea;
 }
 </style>
