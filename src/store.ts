@@ -36,11 +36,17 @@ export const useStore = defineStore('mainStore', () => {
     }
   ])
 
-  function createBoard(title) {}
+  function createBoard(title: string) {
+    console.log(title)
+  }
 
-  function createList(boardId, title) {}
+  function createList(boardId: number, title: string) {
+    console.log(boardId, title)
+  }
 
-  function createTask(boardId, listId, title) {}
+  function createTask(boardId: number, listId: number, title: string) {
+    console.log(boardId, listId, title)
+  }
 
   return { boards, createBoard, createList , createTask }
 })
