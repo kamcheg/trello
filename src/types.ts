@@ -5,7 +5,7 @@ export interface ITask {
 
 export interface IList {
   id: number
-  name: string
+  title: string
   tasks: ITask[]
 }
 

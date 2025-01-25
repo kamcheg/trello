@@ -10,7 +10,7 @@ export const useStore = defineStore('mainStore', () => {
       lists: [
         {
           id: 1,
-          name: 'Все задачи',
+          title: 'Все задачи',
           tasks: [
             {
               id: 33,
@@ -20,7 +20,7 @@ export const useStore = defineStore('mainStore', () => {
         },
         {
           id: 2,
-          name: 'В работе',
+          title: 'В работе',
           tasks: [
             {
               id: 44,
