@@ -10,5 +10,8 @@ const store = useStore()
   </main>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+h1 {
+  color: red;
+}
 </style>
