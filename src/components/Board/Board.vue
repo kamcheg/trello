@@ -18,6 +18,7 @@ const boardIndex = computed<number>(() => {
   return store.boards.findIndex(b => b.id === id)
 })
 
+/* METHODS */
 function onAddTask (listId: IList['id'], title: string) {
   store.createTask(store.boards[boardIndex.value].id, listId, title)
 }
@@ -34,33 +35,43 @@ function onCreateList(title: string) {
 <template>
   <h1 v-if="boardIndex === -1">Error</h1>
   <div v-else class="board">
-    <List
-      v-for="list of store.boards[boardIndex].lists"
-      :key="list.id"
-      :title="list.title"
-      class="list"
-      @createTask="onAddTask(list.id, $event)"
+    <Draggable
+      v-model="store.boards[boardIndex].lists"
+      item-key="id"
+      :animation="300"
+      ghost-class="ghost"
+      group="lists"
+      class="lists"
     >
-      <Draggable
-        v-model="list.tasks"
-        item-key="id"
-        :animation="300"
-        ghost-class="ghost"
-        group="tasks"
-        class="body"
-      >
-        <template #item="{ element: task }">
-          <Task
-            class="body__task"
-            @delete="onRemoveTask(list.id, task.id)"
+      <template #item="{ element: list }">
+        <List
+          :title="list.title"
+          class="list"
+          @createTask="onAddTask(list.id, $event)"
+        >
+          <Draggable
+            v-model="list.tasks"
+            item-key="id"
+            :animation="300"
+            ghost-class="ghost"
+            group="tasks"
+            class="body"
           >
-            {{ task.title }}
-          </Task>
-        </template>
-      </Draggable>
-    </List>
+            <template #item="{ element: task }">
+              <Task
+                class="body__task"
+                @delete="onRemoveTask(list.id, task.id)"
+              >
+                {{ task.title }}
+              </Task>
+            </template>
+          </Draggable>
+        </List>
+      </template>
+    </Draggable>
 
     <ListCreator
+      style="flex-shrink: 0;"
       @create="onCreateList($event)"
     />
   </div>
@@ -70,11 +81,17 @@ function onCreateList(title: string) {
 .board {
   display: flex;
   align-items: flex-start;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.lists {
+  display: flex;
+  align-items: flex-start;
 
   .list {
-    &:not(:last-child) {
-      margin-right: 24px;
-    }
+    flex-shrink: 0;
+    margin-right: 24px;
   }
 }
 
