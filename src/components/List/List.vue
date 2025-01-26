@@ -62,6 +62,7 @@ function onChangeTitle(title: string) {
 
       <div class="buttons-block">
         <ElButton
+          v-if="!contenteditable"
           size="small"
           :icon="EditPen"
           circle

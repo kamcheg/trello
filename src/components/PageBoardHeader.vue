@@ -1,8 +1,19 @@
 <script setup lang="ts">
 import {Back} from '@element-plus/icons-vue'
 import {ElButton} from 'element-plus'
+import { computed } from 'vue'
+import { useStore } from '@/store.ts'
+import { useRoute } from 'vue-router'
 
-const title = 'title'
+
+/* HOOKS */
+const store = useStore()
+const route = useRoute()
+
+const title = computed<string>(() => {
+  const id = +route.params.id
+  return store.boards.find(b => b.id === id)?.title || ''
+})
 </script>
 
 <template>
@@ -11,7 +22,7 @@ const title = 'title'
       <ElButton :icon="Back" circle />
     </RouterLink>
 
-    <p class="title">
+    <p v-if="title" class="title">
       Доска: {{ title }}
     </p>
   </header>
