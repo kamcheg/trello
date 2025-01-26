@@ -18,7 +18,6 @@ const boardIndex = computed<number>(() => {
 })
 
 function onAddTask (listId: IList['id'], title: string) {
-  console.log(listId, title)
   store.createTask(store.boards[boardIndex.value].id, listId, title)
 }
 

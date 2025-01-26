@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Plus } from '@element-plus/icons-vue'
 import { ElButton } from 'element-plus'
-import ModalCreateTask from '@/components/Task/ModalCreateTask.vue'
+import ModalTitle from '@/components/ModalTitle.vue'
 import { ref } from 'vue'
 
 defineProps<{
@@ -39,8 +39,10 @@ function onCreate(title: string) {
       </ElButton>
     </div>
 
-    <ModalCreateTask
+    <ModalTitle
       :visible="isModalVisible"
+      placeholder="Введите название задачи"
+      btnText="Создать задачу"
       @create="onCreate"
       @close="isModalVisible = false"
     />

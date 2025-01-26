@@ -5,9 +5,17 @@ import { Plus } from '@element-plus/icons-vue'
 
 const title = ref('')
 
-defineProps<{
-  visible: boolean
-}>()
+withDefaults(
+  defineProps<{
+    visible: boolean
+    placeholder?: string
+    btnText?: string
+  }>(),
+  {
+    btnText: 'Создать',
+    placeholder: ''
+  }
+)
 
 const emit = defineEmits<{
   (name: 'close'): void
@@ -28,14 +36,16 @@ function onCreate() {
     @close="emit('close')"
   >
     <div class="modal-create-task__wrapper">
-      <ElInput v-model="title" placeholder="Введите название задачи" />
+      <ElInput v-model="title" :placeholder />
 
       <ElButton
         type="primary"
         :icon="Plus"
         class="modal-create-task__btn"
         @click="onCreate"
-      >Создать задачу</ElButton>
+      >
+        {{btnText}}
+      </ElButton>
     </div>
   </ElDialog>
 </template>
