@@ -38,7 +38,15 @@ export const useStore = defineStore('mainStore', () => {
   ])
 
   function createBoard(title: string) {
-    console.log(title)
+    boards.value.push({
+      id: generateId(),
+      title: title,
+      lists: []
+    })
+  }
+
+  function onDeleteBoard(boardId: IBoard['id']) {
+    boards.value = boards.value.filter(b => b.id !== boardId)
   }
 
   function createList(boardId: IBoard['id'], title: string) {
@@ -88,6 +96,7 @@ export const useStore = defineStore('mainStore', () => {
   return {
     boards,
     createBoard,
+    onDeleteBoard,
     createList,
     createTask,
     removeTask,

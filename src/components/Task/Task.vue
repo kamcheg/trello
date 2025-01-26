@@ -23,7 +23,7 @@ const emit = defineEmits<{
       </template>
 
       <div class="context-menu">
-        <ElButton class="context-menu__btn">
+        <ElButton v-if="false" class="context-menu__btn">
           Редактировать
         </ElButton>
 
