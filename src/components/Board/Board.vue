@@ -30,6 +30,14 @@ function onRemoveTask(listId: IList['id'], taskId: ITask['id']) {
 function onCreateList(title: string) {
   store.createList(store.boards[boardIndex.value].id, title)
 }
+
+function onChangeListTitle(listId: IList['id'], title: string) {
+  store.changeListTitle(store.boards[boardIndex.value].id, listId, title)
+}
+
+function onRemoveList(listId: IList['id']) {
+  store.removeList(store.boards[boardIndex.value].id, listId)
+}
 </script>
 
 <template>
@@ -48,6 +56,8 @@ function onCreateList(title: string) {
           :title="list.title"
           class="list"
           @createTask="onAddTask(list.id, $event)"
+          @changeTitle="onChangeListTitle(list.id, $event)"
+          @delete="onRemoveList(list.id)"
         >
           <Draggable
             v-model="list.tasks"
