@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ElButton, ElPopover } from 'element-plus'
 import { MoreFilled } from '@element-plus/icons-vue'
+
+const emit = defineEmits<{
+  (name: 'delete'): void
+}>()
 </script>
 
 <template>
@@ -23,12 +27,14 @@ import { MoreFilled } from '@element-plus/icons-vue'
           Редактировать
         </ElButton>
 
-        <ElButton class="context-menu__btn">
+        <ElButton
+          class="context-menu__btn"
+          @click="emit('delete')"
+        >
           Удалить
         </ElButton>
       </div>
     </ElPopover>
-
   </div>
 </template>
 

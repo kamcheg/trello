@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { useLocalStorage } from '@vueuse/core'
-import type { IBoard } from '@/types.ts'
+import type { IBoard, IList, ITask } from '@/types.ts'
+import { generateId } from '@/libs/generateId.ts'
 
 export const useStore = defineStore('mainStore', () => {
   const boards = useLocalStorage<IBoard[]>('boards', [
@@ -40,13 +41,35 @@ export const useStore = defineStore('mainStore', () => {
     console.log(title)
   }
 
-  function createList(boardId: number, title: string) {
+  function createList(boardId: IBoard['id'], title: string) {
     console.log(boardId, title)
   }
 
-  function createTask(boardId: number, listId: number, title: string) {
-    console.log(boardId, listId, title)
+  function createTask(boardId: IBoard['id'], listId: IList['id'], title: string) {
+    const currentBoard = boards.value.find(b => b.id === boardId)
+    if (!currentBoard) { return }
+
+    const currentList = currentBoard.lists.find(l => l.id === listId)
+    if (!currentList) { return }
+
+    currentList.tasks.push({id: generateId(), title: title})
   }
 
-  return { boards, createBoard, createList , createTask }
+  function removeTask(boardId: IBoard['id'], listId: IList['id'], taskId: ITask['id']) {
+    const currentBoard = boards.value.find(b => b.id === boardId)
+    if (!currentBoard) { return }
+
+    const currentList = currentBoard.lists.find(l => l.id === listId)
+    if (!currentList) { return }
+
+    currentList.tasks = currentList.tasks.filter(t => t.id !== taskId)
+  }
+
+  return {
+    boards,
+    createBoard,
+    createList,
+    createTask,
+    removeTask
+  }
 })

@@ -5,6 +5,10 @@ import { useStore } from '@/store.ts'
 import { computed } from 'vue'
 import Task from '@/components/Task/Task.vue'
 import Draggable from 'vuedraggable'
+import { Plus } from '@element-plus/icons-vue'
+import { ElButton } from 'element-plus'
+import type { IList, ITask } from '@/types.ts'
+import ModalCreateTask from '@/components/Task/ModalCreateTask.vue'
 
 /* HOOKS */
 const store = useStore()
@@ -15,6 +19,15 @@ const boardIndex = computed<number>(() => {
   const id = +route.params.id
   return store.boards.findIndex(b => b.id === id)
 })
+
+function onAddTask (listId: IList['id'], title: string) {
+  console.log(listId, title)
+  store.createTask(store.boards[boardIndex.value].id, listId, title)
+}
+
+function onRemoveTask(listId: IList['id'], taskId: ITask['id']) {
+  store.removeTask(store.boards[boardIndex.value].id, listId, taskId)
+}
 </script>
 
 <template>
@@ -25,17 +38,21 @@ const boardIndex = computed<number>(() => {
       :key="list.id"
       :title="list.title"
       class="list"
+      @createTask="onAddTask(list.id, $event)"
     >
       <Draggable
         v-model="list.tasks"
         item-key="id"
         :animation="300"
-        ghostClass="ghost"
+        ghost-class="ghost"
         group="tasks"
         class="body"
       >
         <template #item="{ element: task }">
-          <Task class="body__task">
+          <Task
+            class="body__task"
+            @delete="onRemoveTask(list.id, task.id)"
+          >
             {{ task.title }}
           </Task>
         </template>
@@ -63,5 +80,10 @@ const boardIndex = computed<number>(() => {
       margin-bottom: 8px;
     }
   }
+}
+
+.ghost {
+  opacity: 0.5;
+  background: #69eaea;
 }
 </style>

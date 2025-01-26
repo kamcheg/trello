@@ -1,7 +1,23 @@
 <script setup lang="ts">
+import { Plus } from '@element-plus/icons-vue'
+import { ElButton } from 'element-plus'
+import ModalCreateTask from '@/components/Task/ModalCreateTask.vue'
+import { ref } from 'vue'
+
 defineProps<{
   title: string
 }>()
+
+const emit = defineEmits<{
+  (name: 'createTask', title: string): void
+}>()
+
+const isModalVisible = ref(false)
+
+function onCreate(title: string) {
+  isModalVisible.value = false
+  emit('createTask', title)
+}
 </script>
 
 <template>
@@ -11,6 +27,23 @@ defineProps<{
     </div>
 
     <slot />
+
+    <div class="footer">
+      <ElButton
+        type="primary"
+        :icon="Plus"
+        style="width: 100%;"
+        @click="isModalVisible = true"
+      >
+        Добавить
+      </ElButton>
+    </div>
+
+    <ModalCreateTask
+      :visible="isModalVisible"
+      @create="onCreate"
+      @close="isModalVisible = false"
+    />
   </div>
 </template>
 
@@ -26,8 +59,7 @@ defineProps<{
   }
 }
 
-.ghost {
-  opacity: 0.5;
-  background: #69eaea;
+.footer {
+  margin-top: 14px;
 }
 </style>
