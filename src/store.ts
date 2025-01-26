@@ -42,7 +42,10 @@ export const useStore = defineStore('mainStore', () => {
   }
 
   function createList(boardId: IBoard['id'], title: string) {
-    console.log(boardId, title)
+    const currentBoard = boards.value.find(b => b.id === boardId)
+    if (!currentBoard) { return }
+
+    currentBoard.lists.push({id: generateId(), title, tasks: []})
   }
 
   function createTask(boardId: IBoard['id'], listId: IList['id'], title: string) {

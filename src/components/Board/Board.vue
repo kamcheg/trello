@@ -6,6 +6,7 @@ import { computed } from 'vue'
 import Task from '@/components/Task/Task.vue'
 import Draggable from 'vuedraggable'
 import type { IList, ITask } from '@/types.ts'
+import ListCreator from '@/components/ListCreator.vue'
 
 /* HOOKS */
 const store = useStore()
@@ -23,6 +24,10 @@ function onAddTask (listId: IList['id'], title: string) {
 
 function onRemoveTask(listId: IList['id'], taskId: ITask['id']) {
   store.removeTask(store.boards[boardIndex.value].id, listId, taskId)
+}
+
+function onCreateList(title: string) {
+  store.createList(store.boards[boardIndex.value].id, title)
 }
 </script>
 
@@ -54,6 +59,10 @@ function onRemoveTask(listId: IList['id'], taskId: ITask['id']) {
         </template>
       </Draggable>
     </List>
+
+    <ListCreator
+      @create="onCreateList($event)"
+    />
   </div>
 </template>
 

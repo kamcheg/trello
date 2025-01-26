@@ -3,6 +3,7 @@ import { Plus } from '@element-plus/icons-vue'
 import { ElButton } from 'element-plus'
 import ModalTitle from '@/components/ModalTitle.vue'
 import { ref } from 'vue'
+import ListWrapper from '@/components/ListWrapper.vue'
 
 defineProps<{
   title: string
@@ -21,7 +22,7 @@ function onCreate(title: string) {
 </script>
 
 <template>
-  <div class="list">
+  <ListWrapper class="list">
     <div class="header">
       {{ title }}
     </div>
@@ -46,16 +47,11 @@ function onCreate(title: string) {
       @create="onCreate"
       @close="isModalVisible = false"
     />
-  </div>
+  </ListWrapper>
 </template>
 
 <style scoped lang="scss">
 .list {
-  width: 272px;
-  border-radius: 12px;
-  background-color: #f1f2f4;
-  padding: 12px;
-
   .header {
     font-weight: 700;
   }
