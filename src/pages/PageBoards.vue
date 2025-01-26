@@ -33,6 +33,7 @@ function onDelete(id: IBoard['id']) {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
 
   &-content {
     width: 700px;

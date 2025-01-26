@@ -2,13 +2,8 @@
 </script>
 
 <template>
-  <div class="root">
-    <RouterView />
-  </div>
+  <RouterView />
 </template>
 
 <style lang="scss" scoped>
-.root {
-  padding: 20px;
-}
 </style>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ElButton, ElInput, ElDialog } from 'element-plus'
-import { ref } from 'vue'
+import { ref, useTemplateRef } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
 
 const title = ref('')
@@ -22,6 +22,8 @@ const emit = defineEmits<{
   (name: 'create', title: string): void
 }>()
 
+const input = useTemplateRef<HTMLInputElement>('input')
+
 function onCreate() {
   emit('create', title.value)
   title.value = ''
@@ -34,9 +36,10 @@ function onCreate() {
     width="500"
     class="modal-create-task"
     @close="emit('close')"
+    @opened="input?.focus()"
   >
     <div class="modal-create-task__wrapper">
-      <ElInput v-model="title" :placeholder />
+      <ElInput ref="input" v-model="title" :placeholder />
 
       <ElButton
         type="primary"
