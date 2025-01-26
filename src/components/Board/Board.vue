@@ -5,10 +5,7 @@ import { useStore } from '@/store.ts'
 import { computed } from 'vue'
 import Task from '@/components/Task/Task.vue'
 import Draggable from 'vuedraggable'
-import { Plus } from '@element-plus/icons-vue'
-import { ElButton } from 'element-plus'
 import type { IList, ITask } from '@/types.ts'
-import ModalCreateTask from '@/components/Task/ModalCreateTask.vue'
 
 /* HOOKS */
 const store = useStore()
