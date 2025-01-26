@@ -1,33 +1,46 @@
 <script setup lang="ts">
 import List from '@/components/List/List.vue'
-import type { IBoard } from '@/types.ts'
 import { useRoute } from 'vue-router'
 import { useStore } from '@/store.ts'
 import { computed } from 'vue'
+import Task from '@/components/Task/Task.vue'
+import Draggable from 'vuedraggable'
 
-
+/* HOOKS */
 const store = useStore()
 const route = useRoute()
 
 /* COMPUTED */
-const boardId = computed<number>(() => {
-  return +route.params.id
-})
-const currentBoard = computed<IBoard | undefined>(() => {
-  return store.boards.find(b => b.id === boardId.value)
+const boardIndex = computed<number>(() => {
+  const id = +route.params.id
+  return store.boards.findIndex(b => b.id === id)
 })
 </script>
 
 <template>
-  <h1 v-if="!currentBoard">Error</h1>
+  <h1 v-if="boardIndex === -1">Error</h1>
   <div v-else class="board">
     <List
-      v-for="list of currentBoard.lists"
+      v-for="list of store.boards[boardIndex].lists"
       :key="list.id"
-      :boardId="boardId"
-      :listId="list.id"
+      :title="list.title"
       class="list"
-    />
+    >
+      <Draggable
+        v-model="list.tasks"
+        item-key="id"
+        :animation="300"
+        ghostClass="ghost"
+        group="tasks"
+        class="body"
+      >
+        <template #item="{ element: task }">
+          <Task class="body__task">
+            {{ task.title }}
+          </Task>
+        </template>
+      </Draggable>
+    </List>
   </div>
 </template>
 
@@ -39,6 +52,15 @@ const currentBoard = computed<IBoard | undefined>(() => {
   .list {
     &:not(:last-child) {
       margin-right: 24px;
+    }
+  }
+}
+
+.body {
+  padding-top: 12px;
+  &__task {
+    &:not(:last-child) {
+      margin-bottom: 8px;
     }
   }
 }
