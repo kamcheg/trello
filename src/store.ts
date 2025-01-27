@@ -28,7 +28,7 @@ export const useStore = defineStore('mainStore', () => {
               title: 'Сделать уборку'
             },
             {
-              id: 44,
+              id: 144,
               title: 'Сходить в магазин'
             }
           ]
